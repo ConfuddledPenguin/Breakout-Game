@@ -24,8 +24,8 @@
 	</section>
 	<section id="game" class="noDisplay">
 		<div id="gameHeader">
-			<a href="#" id="menubutton">Menu</a>
-			<p>Time</p>
+			<a href="#" id="menubutton">Pause</a>
+			<p>Score <span id="scoreDisplay"/></p>
 		</div>
 		<div id="gameArea">
 			<canvas id="gameCanvas">Your Browser can't play this game, get a better one!</canvas>
@@ -36,6 +36,15 @@
 				<li><a href="#" id="pauseResume">Resume</a></li>
 				<li><a href="#" id="pauseQuitMain">Quit to Main</a></li>
 				<li><a href="#" id="pauseQuit">Quit</a></li>
+			</ul>			
+		</div>
+		<div id="failMenu" class="noDisplay">
+			<h1>Game Over</h1>
+			<ul>
+				<li><a href="#" id="failRestart">Restart</a></li>
+				<li><a href="#" id="failSaveScore">Save Highscore</a></li>
+				<li><a href="#" id="failQuitMain">Quit to Main</a></li>
+				<li><a href="#" id="failQuit">Quit</a></li>
 			</ul>			
 		</div>
 	</section>

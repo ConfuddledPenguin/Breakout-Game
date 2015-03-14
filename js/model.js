@@ -11,7 +11,9 @@ function Model(controller) {
         paddle = {},
         ball = {},
         blocks = new Array(),
-        start = true;
+        start = true,
+        score = 0,
+        startTime = 0;
 
     function block(x, y, width, color) {
         var x = x,
@@ -73,13 +75,13 @@ function Model(controller) {
         ball.y = ball.ystart;
         ball.vx = 0;
         ball.vxstart = ball.vx;
-        ball.vy = -100;
+        ball.vy = -170;
         ball.vystart = ball.vy;
 
         var blocksPerRow = 11,
             blocksPerCol = 4,
             blockWidth = gameWidth / blocksPerRow,
-            colors = ["#568545" , "#785675", "#564357", "#545643"];
+            colors = ["#0000FF" , "#00FFFF", "#00FF00", "#FF0000"];
 
         for( var x = 0; x < blocksPerRow; x++){
 
@@ -111,6 +113,8 @@ function Model(controller) {
 
         if(start){
             this.getVars();
+            var d = new Date();
+            startTime = d.getTime();
             start = false;
         }
 
@@ -170,10 +174,8 @@ function Model(controller) {
         }
 
         if ( y + ball.width /2 > gameHeight){// bottom wall
-            x = ball.xstart;
-            y = ball.ystart;
-            ball.vx = ball.vxstart;
-            ball.vy = ball.vystart;
+            
+            controller.gameOver();
         }
 
         /*
@@ -183,7 +185,6 @@ function Model(controller) {
          * There is no point checking for collisions with the bottom of the 
          * paddle.
          */
-
         var rect = {};
         rect.x = paddle.x;
         rect.y = paddle.y;
@@ -243,6 +244,16 @@ function Model(controller) {
 
                         block.remove();
 
+                        var d = new Date();
+
+                        var multiplier = ( (3 * 60) - ( (d.getTime() - startTime) / 1000 )) / 30;
+
+                        if(multiplier < 0){
+                            multiplier = 0;
+                        }
+
+                        score += (4 - ycoord) * 2 * multiplier;
+
                         //Top of block
                         if(ball.y < block.getY() && y < block.getY() - block.getHeight()/2){
                             console.log("top");
@@ -260,10 +271,9 @@ function Model(controller) {
                             ball.vx *= -1;
                         }
 
-                    }
-
+                    } //end coll handling
                 }
-            }
+            }//end block coll checking
         }
 
 
@@ -293,11 +303,6 @@ function Model(controller) {
         } else if (paddle.x + paddle.width >= gameWidth) {
             paddle.x = gameWidth - paddle.width;
         }
-
-        //Bug hunting, displays the data
-        // var gameArea = document.getElementById("gameArea");
-        // gameArea.innerHTML = gameWidth + " " + paddle.x + " " + speed + "</br>";
-
     };
 
     this.resetModel = function() {
@@ -308,6 +313,10 @@ function Model(controller) {
 
     this.shutDown = function() {
         console.log("--MODEL---: shut down");
+    }
+
+    this.getScore = function() {
+        return Math.round(score);
     }
 
     this.init();

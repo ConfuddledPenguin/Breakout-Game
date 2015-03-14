@@ -10,6 +10,7 @@ html, body, section{
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
 	color: white;
+	overflow:hidden;
 }
 
 a{
@@ -70,11 +71,13 @@ $headerHeight: 6%;
  	#gameArea{
  		height: 100 - $headerHeight;
 
+		overflow: hidden;
+
  		canvas{
  		}
  	}
 
- 	#pauseMenu{
+ 	#pauseMenu, #failMenu{
  		position: absolute;
  		left: 10%;
  		top: 20%;

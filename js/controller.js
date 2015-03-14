@@ -7,7 +7,8 @@ function Controller() {
         view = new CanvasDrawer(model),
         updateRate = 16.66666666667 * 2,
         run = false,
-        gamma = 0;
+        gamma = 0,
+        scoreDisplay = document.getElementById("scoreDisplay");
 
     this.update = function() {
 
@@ -17,8 +18,18 @@ function Controller() {
 
             model.update(gamma);
             view.update();
+
+            scoreDisplay.innerHTML = model.getScore();
         }
     };
+
+    this.gameOver = function() {
+
+        run = false;
+
+        this.showFailMenu();
+
+    }
 
     this.run = function() {
         run = true;
@@ -27,6 +38,19 @@ function Controller() {
     this.pause = function() {
         run = false;
     };
+
+    this.showFailMenu = function() {
+
+        var menu = document.getElementById("failMenu");
+        menu.className = "";
+    }
+
+    this.hideFailMenu = function() {
+    
+        var menu = document.getElementById("failMenu");
+        menu.className = "noDisplay";
+
+    }
 
     this.showMainMenu = function() {
 
@@ -92,6 +116,31 @@ function Controller() {
 
         var pauseQuitButton = document.getElementById("pauseQuit");
         pauseQuitButton.addEventListener("click", function() {
+            model.shutDown();
+            window.close();
+        });
+
+        var failRestartButton = document.getElementById("failRestart");
+        failRestartButton.addEventListener("click", function() {
+            controller.hideFailMenu();
+            model.resetModel();
+            controller.run();
+        });
+
+        var failSaveScoreButton = document.getElementById("failSaveScore");
+        failSaveScoreButton.addEventListener("click", function() {
+            alert("not done yet");
+        });
+
+        var failQuitMainButton = document.getElementById("failQuitMain");
+        failQuitMainButton.addEventListener("click", function() {
+            controller.hideFailMenu();
+            model.resetModel();
+            controller.showMainMenu();
+        });
+
+        var failQuitButton = document.getElementById("failQuit");
+        failQuitButton.addEventListener("click", function() {
             model.shutDown();
             window.close();
         });
