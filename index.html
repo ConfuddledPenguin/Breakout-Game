@@ -14,11 +14,33 @@
     <link rel="shortcut icon" href="res/icon.png" type="image/x-icon" />
 </head>
 <body>
-	<section id="menu" class="">
-		Hello
+	<section id="mainMenu" class="">
+		<ul>
+			<h1>Breakout</h1>
+			<li><a id="playGame">Play Game</a></li>
+			<li class="noDisplay"><a id="highScores">HightScores</a></li>
+			<li><a id="quitGame">Quit</a></li>
+		</ul>
 	</section>
 	<section id="game" class="noDisplay">
-		
+		<div id="gameHeader">
+			<a href="#" id="menubutton">Menu</a>
+			<p>Time</p>
+		</div>
+		<div id="gameArea">
+			<canvas id="gameCanvas">Your Browser can't play this game, get a better one!</canvas>
+		</div>
+		<div id="pauseMenu" class="noDisplay">
+			<h1>Paused</h1>
+			<ul>
+				<li><a href="#" id="pauseResume">Resume</a></li>
+				<li><a href="#" id="pauseQuitMain">Quit to Main</a></li>
+				<li><a href="#" id="pauseQuit">Quit</a></li>
+			</ul>			
+		</div>
 	</section>
+	<script src="js/view.js"></script>
+	<script src="js/model.js"></script>
+	<script src="js/controller.js"></script>
 </body>
 </html>

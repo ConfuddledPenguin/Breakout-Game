@@ -1,0 +1,101 @@
+/*******************************************************************************
+ * Global
+ ******************************************************************************/
+
+.noDisplay {
+	display: none;
+}
+
+html, body, section{
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	color: white;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
+
+ul{
+	list-style: none;
+}
+
+/*******************************************************************************
+ * Menu
+ ******************************************************************************/
+
+ #mainMenu{
+ 	background-color: red;
+	text-align: center;
+	line-height: 1.4;
+
+	h1{
+		font-size: 3rem;
+		padding: 4rem 0 2rem 0;
+	}
+
+	li{
+		padding: 0.6rem 0;
+		font-size: 1.4rem;
+	}
+ }
+
+
+
+/*******************************************************************************
+ * Game
+ ******************************************************************************/
+$headerHeight: 6%;
+
+ #game{
+ 	background-color: black;
+
+ 	#gameHeader{
+
+		background-color: lighten(black, 10%);
+		height: $headerHeight; 
+
+ 		a, p{
+ 			position: absolute;
+ 			font-size: 1.2rem;
+ 			padding: 0.5rem 1rem 0 1rem;
+ 		}
+
+ 		p{
+			right: 0px;
+ 		}
+ 	}
+
+ 	#gameArea{
+ 		height: 100 - $headerHeight;
+
+ 		canvas{
+ 		}
+ 	}
+
+ 	#pauseMenu{
+ 		position: absolute;
+ 		left: 10%;
+ 		top: 20%;
+ 		width: 80%;
+ 		text-align: center;
+ 		background-color: white;
+
+ 		a{
+ 			color: black;
+ 			font-size: 1.2rem;
+ 			line-height: 1.4;
+ 		}
+
+ 		li{
+ 			padding: 0.6rem 0;
+ 		}
+
+ 		h1{
+ 			background-color: red;
+ 			font-size: 2.5rem;
+ 			padding: 0.8rem 0;
+ 		}
+ 	}
+ }
