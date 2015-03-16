@@ -90,10 +90,16 @@ function Model(controller) {
             for (var y = 0; y < blocksPerCol; y++){
 
                 blocks[x][y] = new block(x * blockWidth, y * blockWidth, blockWidth, colors[y]);
+
+                if(x == 5 && y == 0){
+
+                }else{
+                    blocks[x][y].remove();
+                }
             }
         }
 
-        console.log(blocks);
+        score = 0;
 
     };
 
@@ -118,11 +124,13 @@ function Model(controller) {
             start = false;
         }
 
+        if(this.checkWinCondition()){
+            controller.gameWon();
+        }
+
 
         this.movePaddle(gamma);
         this.moveBall();
-
-
     };
 
     this.ballCollision = function(x, y, rect){
@@ -141,7 +149,6 @@ function Model(controller) {
         }
 
         return false;
-
     }
 
     this.moveBall = function() {
@@ -304,6 +311,20 @@ function Model(controller) {
             paddle.x = gameWidth - paddle.width;
         }
     };
+
+    this.checkWinCondition = function() {
+
+        for( var xcoord = 0; xcoord < blocks.length; xcoord++){
+            for(var ycoord = 0; ycoord < blocks[xcoord].length; ycoord++){
+         
+                if(blocks[xcoord][ycoord].visible()){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     this.resetModel = function() {
         console.log("--MODEL---: reset");

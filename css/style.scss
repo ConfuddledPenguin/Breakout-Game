@@ -43,6 +43,47 @@ ul{
  }
 
 
+/*******************************************************************************
+ * HighScores
+ ******************************************************************************/
+
+#highscores{
+
+	#highScoreButtons{
+		margin: auto;
+	}
+
+	a{
+		margin: 1rem 0 1rem 0;
+		background-color: red;
+		display: block;
+		float: left;
+		font-size: 1.5rem;
+		text-align: center;
+		padding: 0.5rem 0;
+		width: 25%;
+	}
+
+	a:first-of-type{
+		margin-left: 25%;
+		border-right: solid 1px white;
+	}
+
+	#highScoreExit{
+		width: 50%;
+	}
+
+	#highScoreButtons:after{
+		content: "";
+		clear: both;
+		display: block;
+	}
+
+	section{
+		height: calc(100% - 72px - 72px);
+	}
+}
+
 
 /*******************************************************************************
  * Game
@@ -77,7 +118,7 @@ $headerHeight: 6%;
  		}
  	}
 
- 	#pauseMenu, #failMenu{
+ 	#pauseMenu, #failMenu, #winMenu{
  		position: absolute;
  		left: 10%;
  		top: 20%;

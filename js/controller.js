@@ -31,6 +31,13 @@ function Controller() {
 
     }
 
+    this.gameWon = function() {
+
+        run = false;
+
+        this.showWinMenu();
+    }
+
     this.run = function() {
         run = true;
     };
@@ -48,6 +55,19 @@ function Controller() {
     this.hideFailMenu = function() {
     
         var menu = document.getElementById("failMenu");
+        menu.className = "noDisplay";
+
+    }
+
+    this.showWinMenu = function() {
+
+        var menu = document.getElementById("winMenu");
+        menu.className = "";
+    }
+
+    this.hideWinMenu = function() {
+    
+        var menu = document.getElementById("winMenu");
         menu.className = "noDisplay";
 
     }
@@ -93,6 +113,50 @@ function Controller() {
             menu.className += "noDisplay";
 
             controller.run();
+        });
+
+        var highscoresButton = document.getElementById("highScoresButton");
+        highscoresButton.addEventListener("click", function() {
+
+            var highscores = document.getElementById("highscores");
+            highscores.className = "";
+
+            var menu = document.getElementById("mainMenu");
+            menu.className += "noDisplay";
+
+        });
+
+        var highscoresLocalButton = document.getElementById("highscoresLocalButton");
+        highscoresLocalButton.addEventListener("click", function() {
+
+            var highscoresLocal = document.getElementById("highscoresLocal");
+            highscoresLocal.className = "";
+
+            var highscoresGlobal = document.getElementById("highscoresGlobal");
+            highscoresGlobal.className += "noDisplay";
+
+        });
+
+        var highscoresLocalButton = document.getElementById("highscoresGlobalButton");
+        highscoresLocalButton.addEventListener("click", function() {
+
+            var highscoresLocal = document.getElementById("highscoresLocal");
+            highscoresLocal.className = "noDisplay";
+
+            var highscoresGlobal = document.getElementById("highscoresGlobal");
+            highscoresGlobal.className = "";
+
+        });
+
+        var highscoresExit = document.getElementById("highScoreExit");
+        highscoresExit.addEventListener("click", function() {
+
+            var highscores = document.getElementById("highscores");
+            highscores.className = "noDisplay";
+
+            var menu = document.getElementById("mainMenu");
+            menu.className = "";
+
         });
 
         var menubutton = document.getElementById("menubutton");
@@ -141,6 +205,31 @@ function Controller() {
 
         var failQuitButton = document.getElementById("failQuit");
         failQuitButton.addEventListener("click", function() {
+            model.shutDown();
+            window.close();
+        });
+
+        var winRestartButton = document.getElementById("winRestart");
+        winRestartButton.addEventListener("click", function() {
+            controller.hideWinMenu();
+            model.resetModel();
+            controller.run();
+        });
+
+        var winSaveScoreButton = document.getElementById("winSaveScore");
+        winSaveScoreButton.addEventListener("click", function() {
+            alert("not done yet");
+        });
+
+        var winQuitMainButton = document.getElementById("winQuitMain");
+        winQuitMainButton.addEventListener("click", function() {
+            controller.hideFailMenu();
+            model.resetModel();
+            controller.showMainMenu();
+        });
+
+        var winQuitButton = document.getElementById("winQuit");
+        winQuitButton.addEventListener("click", function() {
             model.shutDown();
             window.close();
         });
