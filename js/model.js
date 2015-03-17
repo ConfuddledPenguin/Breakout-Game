@@ -90,12 +90,6 @@ function Model(controller) {
             for (var y = 0; y < blocksPerCol; y++){
 
                 blocks[x][y] = new block(x * blockWidth, y * blockWidth, blockWidth, colors[y]);
-
-                if(x == 5 && y == 0){
-
-                }else{
-                    blocks[x][y].remove();
-                }
             }
         }
 
@@ -135,20 +129,21 @@ function Model(controller) {
 
     this.ballCollision = function(x, y, rect){
 
-        var x1 = x - ball.width,
-            x2 = x + ball.width,
-            y1 = y - ball.width,
-            y2 = y + ball.width;
+        rect.w = rect.x2 - rect.x;
+        rect.h = rect.y2 - rect.y;
 
-        // console.log("Comparing: " + x1 + " " + x2 + " " + y1 + " " + y2 + " to " 
-        //         + rect.x + " " + rect.x2 + " " + rect.y + " " + rect.y2);
+        var distX = Math.abs(x - rect.x-rect.w/2);
+        var distY = Math.abs(y - rect.y-rect.h/2);
 
-        if( !(x2 < rect.x || x1 > rect.x2 || y1 > rect.y2 || y2 < rect.y)){
-            console.log("col");
-            return true;
-        }
+        if (distX > (rect.w/2 + ball.width/2)) { return false; }
+        if (distY > (rect.h/2 + ball.width/2)) { return false; }
 
-        return false;
+        if (distX <= (rect.w/2)) { return true; } 
+        if (distY <= (rect.h/2)) { return true; }
+
+        var dx=distX-rect.w/2;
+        var dy=distY-rect.h/2;
+        return (dx*dx+dy*dy<=((ball.width/2)*(ball.width/2)));
     }
 
     this.moveBall = function() {
@@ -249,11 +244,13 @@ function Model(controller) {
                     //If collision
                     if( this.ballCollision(x, y, rect)){
 
+                        //remove block from the game
                         block.remove();
 
+                        //deal with scoring
                         var d = new Date();
 
-                        var multiplier = ( (3 * 60) - ( (d.getTime() - startTime) / 1000 )) / 30;
+                        var multiplier = ( (5 * 60) - ( (d.getTime() - startTime) / 1000 )) / 30;
 
                         if(multiplier < 0){
                             multiplier = 0;
@@ -261,12 +258,13 @@ function Model(controller) {
 
                         score += (4 - ycoord) * 2 * multiplier;
 
-                        //Top of block
-                        if(ball.y < block.getY() && y < block.getY() - block.getHeight()/2){
+
+                        //Deal with ball
+                        if(ball.y < block.getY() && y < block.getY() - block.getHeight()/4){//top of block
                             console.log("top");
                             y = block.getY() - ball.height;
                             ball.vy *= -1;
-                        }else if(ball.y > block.getY() + block.getHeight() / 2 && y > block.getY() + block.getHeight()/2){
+                        }else if(ball.y > block.getY() + block.getHeight() / 4 && y > block.getY() + block.getHeight()/4){
                             console.log("bottom");
                             y = block.getY() + block.getHeight() + block.getHeight();
                             ball.vy *= -1;

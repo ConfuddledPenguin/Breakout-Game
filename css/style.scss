@@ -80,7 +80,34 @@ ul{
 	}
 
 	section{
+
 		height: calc(100% - 72px - 72px);
+
+		color: black;
+
+		p{
+			margin-bottom: 0.5rem;
+		}
+
+		p:nth-of-type(2n+1){
+			margin-left: 2rem;
+			float: left;
+		}
+
+		p:nth-of-type(2n+0){
+			text-align: right;
+			margin-right: 2rem;
+		}
+
+		p:nth-of-type(2n+0):after{
+			content: "";
+			display: block;
+			clear: both;
+		}
+
+
+
+
 	}
 }
 

@@ -8,7 +8,8 @@ function Controller() {
         updateRate = 16.66666666667 * 2,
         run = false,
         gamma = 0,
-        scoreDisplay = document.getElementById("scoreDisplay");
+        scoreDisplay = document.getElementById("scoreDisplay"),
+        scores = new Scores();
 
     this.update = function() {
 
@@ -22,6 +23,12 @@ function Controller() {
             scoreDisplay.innerHTML = model.getScore();
         }
     };
+
+    this.saveScore = function() {
+
+        var name = window.prompt("Enter your name");
+        scores.add(name, model.getScore());
+    }
 
     this.gameOver = function() {
 
@@ -100,6 +107,50 @@ function Controller() {
         return updateRate;
     };
 
+    this.showLocalHighScores = function() {
+
+        var highscoresLocal = document.getElementById("highscoresLocal");
+
+        if(scores.isEmpty() === true){
+
+            highscoresLocal.innerHTML = 
+                "<p>There are no scores, play the game to score </p>";
+
+        }else{
+
+            highscoresLocal.innerHTML = "";
+
+            var scoresMap = scores.get();
+
+            console.log(scoresMap);
+
+            for( var score in scoresMap){
+
+                var entry = scoresMap[score];
+
+                highscoresLocal.innerHTML += "<p>" + entry[0] + "</p>" + "<p>" + entry[1] + "</p>";
+
+            }
+
+
+        }
+         
+        highscoresLocal.className = "";
+
+        var highscoresGlobal = document.getElementById("highscoresGlobal");
+        highscoresGlobal.className  = "noDisplay";
+    };
+
+    this.showGlobalHighScores = function() {
+
+        var highscoresLocal = document.getElementById("highscoresLocal");
+            highscoresLocal.className = "noDisplay";
+
+            var highscoresGlobal = document.getElementById("highscoresGlobal");
+            highscoresGlobal.className = "";
+
+    };
+
     this.init = function() {
 
         var playButton = document.getElementById("playGame"),
@@ -115,6 +166,16 @@ function Controller() {
             controller.run();
         });
 
+        document.getElementById("quitGame").addEventListener("click", function() {
+
+            model.shutDown();
+            window.close();
+
+            //For in browser mode
+            alert("If this was a real app I could add this...");
+
+        });
+
         var highscoresButton = document.getElementById("highScoresButton");
         highscoresButton.addEventListener("click", function() {
 
@@ -122,29 +183,23 @@ function Controller() {
             highscores.className = "";
 
             var menu = document.getElementById("mainMenu");
-            menu.className += "noDisplay";
+            menu.className = "noDisplay";
+
+            controller.showLocalHighScores();
 
         });
 
         var highscoresLocalButton = document.getElementById("highscoresLocalButton");
         highscoresLocalButton.addEventListener("click", function() {
 
-            var highscoresLocal = document.getElementById("highscoresLocal");
-            highscoresLocal.className = "";
-
-            var highscoresGlobal = document.getElementById("highscoresGlobal");
-            highscoresGlobal.className += "noDisplay";
-
+            controller.showLocalHighScores();
+            
         });
 
-        var highscoresLocalButton = document.getElementById("highscoresGlobalButton");
-        highscoresLocalButton.addEventListener("click", function() {
+        var highscoresGlobalButton = document.getElementById("highscoresGlobalButton");
+        highscoresGlobalButton.addEventListener("click", function() {
 
-            var highscoresLocal = document.getElementById("highscoresLocal");
-            highscoresLocal.className = "noDisplay";
-
-            var highscoresGlobal = document.getElementById("highscoresGlobal");
-            highscoresGlobal.className = "";
+            controller.showGlobalHighScores();
 
         });
 
@@ -171,6 +226,13 @@ function Controller() {
             controller.run();
         });
 
+        var pauseRestartButton = document.getElementById("pauseRestart");
+        pauseRestartButton.addEventListener("click", function() {
+            controller.hidePauseMenu();
+            model.resetModel();
+            controller.run();
+        });
+
         var pauseQuitMainButton = document.getElementById("pauseQuitMain");
         pauseQuitMainButton.addEventListener("click", function() {
             controller.hidePauseMenu();
@@ -182,6 +244,7 @@ function Controller() {
         pauseQuitButton.addEventListener("click", function() {
             model.shutDown();
             window.close();
+            alert("If this was a real app I could add this...");
         });
 
         var failRestartButton = document.getElementById("failRestart");
@@ -193,7 +256,7 @@ function Controller() {
 
         var failSaveScoreButton = document.getElementById("failSaveScore");
         failSaveScoreButton.addEventListener("click", function() {
-            alert("not done yet");
+            controller.saveScore();
         });
 
         var failQuitMainButton = document.getElementById("failQuitMain");
@@ -207,6 +270,7 @@ function Controller() {
         failQuitButton.addEventListener("click", function() {
             model.shutDown();
             window.close();
+            alert("If this was a real app I could add this...");
         });
 
         var winRestartButton = document.getElementById("winRestart");
@@ -218,12 +282,12 @@ function Controller() {
 
         var winSaveScoreButton = document.getElementById("winSaveScore");
         winSaveScoreButton.addEventListener("click", function() {
-            alert("not done yet");
+            controller.saveScore();
         });
 
         var winQuitMainButton = document.getElementById("winQuitMain");
         winQuitMainButton.addEventListener("click", function() {
-            controller.hideFailMenu();
+            controller.hideWinMenu();
             model.resetModel();
             controller.showMainMenu();
         });
@@ -232,6 +296,7 @@ function Controller() {
         winQuitButton.addEventListener("click", function() {
             model.shutDown();
             window.close();
+            alert("If this was a real app I could add this...");
         });
 
         if(window.DeviceOrientationEvent){
