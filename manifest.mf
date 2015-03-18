@@ -1,0 +1,8 @@
+CACHE MANIFEST
+index.html
+css/style.css
+images/logo.png
+js/controller.js
+js/model.js
+js/scores.js
+js/view.js

@@ -1,0 +1,22 @@
+
+{
+	"app": {
+		"background":{
+			"scripts":["js/model.js", "js/controller.js", "js/scores.js", "js/view.js"]
+		}
+	},
+
+	"manifest_version": 2,
+	"name": "Breakout",
+	"version": "0.1",
+
+	"defualt_local": "en",
+	"description": "A game of breakout",
+	"icons": {
+		"16": "res/favicon-16.png",
+		"32": "res/favicon-32.png",
+		"96": "res/favicon-96.png",
+		"190": "res/favicon-190.png",
+
+	}
+}

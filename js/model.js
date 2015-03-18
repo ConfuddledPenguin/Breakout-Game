@@ -261,12 +261,10 @@ function Model(controller) {
 
                         //Deal with ball
                         if(ball.y < block.getY() && y < block.getY() - block.getHeight()/4){//top of block
-                            console.log("top");
                             y = block.getY() - ball.height;
                             ball.vy *= -1;
                         }else if(ball.y > block.getY() + block.getHeight() / 4 && y > block.getY() + block.getHeight()/4){
-                            console.log("bottom");
-                            y = block.getY() + block.getHeight() + block.getHeight();
+                            y = block.getY() + block.getHeight() + ball.height;
                             ball.vy *= -1;
                         } else if(ball.x < block.getX() && x < block.getX() + (block.getWidth()/2)){
                             x = block.getX() - ball.width;
@@ -276,9 +274,9 @@ function Model(controller) {
                             ball.vx *= -1;
                         }
 
-                    } //end coll handling
+                    } //end collision handling
                 }
-            }//end block coll checking
+            }//end block collision checking
         }
 
 
