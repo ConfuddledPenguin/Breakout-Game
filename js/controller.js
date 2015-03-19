@@ -122,11 +122,9 @@ function Controller() {
 
             var scoresMap = scores.get();
 
-            console.log(scoresMap);
+            for( var i = scoresMap.length - 1 ; i != 0; i--){
 
-            for( var score in scoresMap){
-
-                var entry = scoresMap[score];
+                var entry = scoresMap[i];
 
                 highscoresLocal.innerHTML += "<p>" + entry[0] + "</p>" + "<p>" + entry[1] + "</p>";
 

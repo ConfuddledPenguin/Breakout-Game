@@ -218,10 +218,12 @@ function Model(controller) {
                     x = paddle.x - ball.width/2;
                     ball.vx = (ball.vx * -1 ) + paddle.speed;
 
+
                 }else if(ball.x > paddle.x + paddle.width){ //right side
 
                     x = paddle.x + paddle.width + ball.width/2;
                     ball.vx = (ball.vx * -1 ) + paddle.speed;
+
                 }
             }
         }//finished paddle checks
@@ -258,27 +260,32 @@ function Model(controller) {
 
                         score += (4 - ycoord) * 2 * multiplier;
 
+                        //Deal with the ball
+                        if ( ball.y > block.getY() + block.getHeight() - ball.height/2 && ball.x < (ball.y/1.6197) + block.getX() + block.getWidth() && ball.x > block.getX() - (ball.y/1.6197)) {
 
-                        //Deal with ball
-                        if(ball.y < block.getY() && y < block.getY() - block.getHeight()/4){//top of block
-                            y = block.getY() - ball.height;
-                            ball.vy *= -1;
-                        }else if(ball.y > block.getY() + block.getHeight() / 4 && y > block.getY() + block.getHeight()/4){
-                            y = block.getY() + block.getHeight() + ball.height;
-                            ball.vy *= -1;
-                        } else if(ball.x < block.getX() && x < block.getX() + (block.getWidth()/2)){
+                            if (y < block.getY() + block.getHeight() + (ball.height/2) ) {
+
+                                y = block.getY() + block.getHeight() + ball.height;
+                                ball.vy *= -1;
+                            }
+                        }else if (ball.y < block.getY() && ball.x < (y/1.6197) + block.getX() + block.getWidth() && ball.x > block.getX() - (y/1.6197)) {
+
+                            if( y < block.getY() - ball.height / 2 ){
+                                y = block.getY() - ball.height;
+                                ball.vy *= -1;
+                            }
+
+                        } else if (ball.x < block.getX() && x < block.getX() + (block.getWidth()/2)){ // left
                             x = block.getX() - ball.width;
                             ball.vx *= -1;
-                        } else if(ball.x > block.getX() + block.getWidth() && x > block.getX() - block.getWidth() / 2){
+                        } else if(ball.x > block.getX() + block.getWidth() && x > block.getX() - block.getWidth() / 2){ //right
                             x = block.getX() + block.getWidth() + block.getWidth();
                             ball.vx *= -1;
                         }
-
                     } //end collision handling
                 }
             }//end block collision checking
         }
-
 
         ball.x = x;
         ball.y = y;
@@ -296,7 +303,7 @@ function Model(controller) {
             gamma = 0;
         }
 
-        var speed = Math.pow(gamma, 1.35) / 4 * multiplier * 2;
+        var speed = Math.pow(gamma, 1.35) / 5 * multiplier * 2;
 
         paddle.speed = speed * controller.getUpdateTime();
         paddle.x = paddle.x + speed;
