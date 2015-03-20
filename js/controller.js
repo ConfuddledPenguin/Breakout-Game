@@ -27,6 +27,7 @@ function Controller() {
     this.saveScore = function() {
 
         var name = window.prompt("Enter your name");
+
         scores.add(name, model.getScore());
     }
 
@@ -122,9 +123,11 @@ function Controller() {
 
             var scoresMap = scores.get();
 
-            for( var i = scoresMap.length - 1 ; i != 0; i--){
+            for( var i = scoresMap.length - 1 ; i != scoresMap.length  -11; i--){
 
-                var entry = scoresMap[i];
+                var entry = scoresMap[i][1];
+
+                console.log(entry);
 
                 highscoresLocal.innerHTML += "<p>" + entry[0] + "</p>" + "<p>" + entry[1] + "</p>";
 

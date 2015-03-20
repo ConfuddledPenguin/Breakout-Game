@@ -116,6 +116,7 @@ function Model(controller) {
             var d = new Date();
             startTime = d.getTime();
             start = false;
+            score = 0;
         }
 
         if(this.checkWinCondition()){
@@ -132,19 +133,24 @@ function Model(controller) {
         rect.w = rect.x2 - rect.x;
         rect.h = rect.y2 - rect.y;
 
-        var distX = Math.abs(x - rect.x-rect.w/2);
-        var distY = Math.abs(y - rect.y-rect.h/2);
+        var distX = Math.abs(x - rect.x-rect.w / 2);
+        var distY = Math.abs(y - rect.y-rect.h / 2);
 
-        if (distX > (rect.w/2 + ball.width/2)) { return false; }
-        if (distY > (rect.h/2 + ball.width/2)) { return false; }
+        if (distX > (rect.w / 2 + ball.width / 2)) 
+            return false;
+        if (distY > (rect.h / 2 + ball.width / 2)) 
+            return false;
 
-        if (distX <= (rect.w/2)) { return true; } 
-        if (distY <= (rect.h/2)) { return true; }
+        if (distX <= (rect.w / 2)) 
+            return true;
+        if (distY <= (rect.h / 2))
+            return true;
 
-        var dx=distX-rect.w/2;
-        var dy=distY-rect.h/2;
-        return (dx*dx+dy*dy<=((ball.width/2)*(ball.width/2)));
-    }
+        var dx = distX - rect.w / 2;
+        var dy = distY - rect.h / 2;
+
+        return ( dx * dx + dy * dy <= ((ball.width/2)*(ball.width/2)));
+    };
 
     this.moveBall = function() {
 
@@ -193,6 +199,7 @@ function Model(controller) {
         rect.x2 = paddle.x + paddle.width;
         rect.y2 = paddle.y + paddle.height;
 
+        // if (false){
         if (this.ballCollision(x, y, rect)){
 
             /*
@@ -327,21 +334,21 @@ function Model(controller) {
         }
 
         return true;
-    }
+    };
 
     this.resetModel = function() {
         console.log("--MODEL---: reset");
 
         start = true;
-    }
+    };
 
     this.shutDown = function() {
         console.log("--MODEL---: shut down");
-    }
+    };
 
     this.getScore = function() {
         return Math.round(score);
-    }
+    };
 
     this.init();
 

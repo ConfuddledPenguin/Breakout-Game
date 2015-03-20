@@ -24,7 +24,13 @@ function Scores() {
 
 	this.add = function(name, score) {
 
-		scoresMap[name] = score;
+		var values = {};
+		values[0] = name;
+		values[1] = score;
+
+		var d = new Date();
+
+		scoresMap[d.getTime()] = values;
 		this.save();
 	}
 
@@ -50,7 +56,7 @@ function Scores() {
 		var sortable = [];
 		for (var name in scoresMap)
 		      sortable.push([name, scoresMap[name]]);
-		sortable.sort(function(a, b) {return a[1] - b[1]});
+		sortable.sort(function(a, b) {return a[1][1] - b[1][1]});
 
 		return sortable;
 	}
